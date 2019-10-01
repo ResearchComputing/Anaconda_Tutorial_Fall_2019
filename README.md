@@ -141,11 +141,11 @@ _in this example we install ipykernel so that we can create a Jupyter kernel lat
 
 CU Research Computing (CURC) operates a [JupyterHub server](https://jupyterhub.readthedocs.org/en/latest/) that enables users to run Jupyter notebooks on Summit or Blanca for serial (single core) and shared-memory parallel (single node) workflows. The CURC JupyterHub runs atop of [Anaconda](http://anaconda.com).  Additional documentation on the [CURC Anaconda distribution](../software/python.md) is available and may be a good pre-requisite for the following documentation outlining use of the CURC JupyterHub.
 
-### Step 1: Log  in to CURC JupyterHub
+#### Step 1: Log  in to CURC JupyterHub
 
 CURC JupyterHub is available at [https://jupyter.rc.colorado.edu](https://jupyter.rc.colorado.edu). To log in use your RC credentials. If you do not have an RC account, please [request an account before continuing.](https://rcamp.rc.colorado.edu/accounts/account-request/create/organization)
 
-### Step 2: Start a notebook server
+#### Step 2: Start a notebook server
 
 To start a notebook server, select one of the available options in the *Select job profile* menu under *Spawner Options* and click *Spawn*. Available options are:
 
@@ -171,7 +171,7 @@ The server will take a few moments to start.  When it does, you will be taken to
 * _New_: Enables you to open a new notebook via a chosen kernel (e.g., Python2, Python3, bash, R) 
     * _documentation on opening new notebooks is provided in "Step 3" below_
 
-#### Default Notebook Features
+##### Default Notebook Features
 
 * Access to standard RC file systems: 
   * `/home`
@@ -187,7 +187,7 @@ The server will take a few moments to start.  When it does, you will be taken to
   * __R__: R notebook 
 * IPyParallel/IPython clusters
 
-### Step 3: Open a notebook
+#### Step 3: Open a notebook
 
 There are two ways to open a notebook:
 * _To open a new notebook_: click on the _`New`_ button on the right hand side of the Jupyter home screen, and select one of the available options (kernels) under "Notebook", depending on the programming language you wish to use in the notebook (e.g., python, R, bash). Once you are in the notebook, you can save it to _myfilename_.ipynb using the _File -> Save as.._ option.
@@ -202,7 +202,7 @@ pipmain(['freeze'])
 
 If the packages you need are not available, [you can create your own custom environment and Jupyter kernel](#additional-documentation).
 
-### Step 4: Shut down a Notebook Server
+#### Step 4: Shut down a Notebook Server
 
 Use the _`Stop My Server`_ button in the _`Control Panel`_ to shut down the Jupyter notebook server when finished (this cancels the job you are running on Summit or Blanca). You also have the option to restart a server if desired (for example, if you want to change from a "shas" to a "sknl" server).
 
