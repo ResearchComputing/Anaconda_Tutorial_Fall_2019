@@ -1,8 +1,19 @@
 # Tutorial: Using Python with Anaconda
 
-To support the diverse python workflows and high levels of customization Research Computing users require, [Anaconda](http://anaconda.com) is installed on the CURC system. Anaconda is an open-source _python_ and _R_ distribution that uses the _conda_ package manager to easily install software and packages. The following documentation describes how to activate the CURC Anaconda distribution and our default environments, as well as how to create and activate your own custom Anaconda environments. Additional documentation on the [CURC JupyterHub](../gateways/jupyterhub.md) is available for users desiring to interact with their custom environments via [Jupyter notebooks](https://jupyter.org). 
+To support the diverse python workflows and high levels of customization Research Computing users require, [Anaconda](http://anaconda.com) is installed on the CURC system. Anaconda is an open-source _python_ and _R_ distribution that uses the _conda_ package manager to easily install software and packages. The following tutorial describes how to: 
 
-_Note: CURC also hosts several python modules for those users who prefer modules over Anaconda. Type ```module spider python``` for a list of available python versions. Each module employs the Intel python distribution and has numerous pre-installed packages which can be queried by typing ```pip freeze```._ 
+* activate the CURC Anaconda distribution and our default environments
+* how to create and activate your own custom Anaconda environments
+* how to create a kernel to use your custom environment in RC JupyterHub
+* how to use your custom envirnoment in RC JupyterHub
+
+## Section 1: Finding Help
+
+For future reference, the following documentation is available:
+
+* [CURC Anaconda distribution](../software/python.md)
+* [CURC JupyterHub](../gateways/jupyterhub.md) 
+* [Parallel Programming on CURC JupyterHub](https://curc.readthedocs.io/en/latest/gateways/parallel-programming-
 
 ## Using the CURC Anaconda environment
 
@@ -299,21 +310,27 @@ _*Note: In the examples below the environment is created in `/projects/$USER/sof
 
 This command will create a kernel with the name _mycustomenv_ and the Jupyter display name _mycustomenv_ (note that the name and display-name are not required to match the environment name -- call them anything you want). By specifying the _`--user`_ flag, the kernel will be in _`/home/$USER/.local/share/jupyter/kernels`_ (a directory that is in the default __JUPYTER_PATH__) and will ensure your new kernel is available to you the next time you use CURC JupyterHub.
 
-##### Notes on creating environments:
-* You can create an environment in any directory location you prefer (as long as you have access to that directory).  We recommend using your _`/projects`_ directory because it is much larger than your _`/home`_ directory).
-* Although we don't show it here, it is expected that you will be installing whatever software and packages you need in this environment, as you normally would with conda).
-* We [strongly recommend] cloning the [Intel Python distribution](https://software.intel.com/en-us/distribution-for-python) (idp) if you will be doing any computationally-intensive work, or work that requires parallelization. The Intel Python distribution will run more efficiently on our Intel architecture than other python distributions.
-* If you have already installed your own version of Anaconda or Miniconda, it is possible to create Jupyter kernels for your preexisting environments by following _Step 4_ above from within the active environment.  
-* If you need to use custom kernels that are in a location other than _`/home/$USER/.local/share/jupyter`_ (for example, if your research team has a group installation of Anaconda environments located in _`/pl/active/<some_env>`_), you can create a file in your home directory named _`~/.jupyterrc`_ containing the following line:
+##### Notes
+* Anaconda
+  * CURC also hosts several python modules for those users who prefer modules over Anaconda. Type ```module spider python``` for a list of available python versions. Each module employs the Intel python distribution and has numerous pre-installed packages which can be queried by typing ```pip freeze```.
+* Creating conda environments
+  * You can create an environment in any directory location you prefer (as long as you have access to that directory).  We recommend using your _`/projects`_ directory because it is much larger than your _`/home`_ directory).
+  * Although we don't show it here, it is expected that you will be installing whatever software and packages you need in this environment, as you normally would with conda).
+  * We [strongly recommend] cloning the [Intel Python distribution](https://software.intel.com/en-us/distribution-for-python) (idp) if you will be doing any computationally-intensive work, or work that requires parallelization. The Intel Python distribution will run more efficiently on our Intel architecture than other python distributions.
+* JupyterHub kernels
+  * If you have already installed your own version of Anaconda or Miniconda, it is possible to create Jupyter kernels for your preexisting environments by following the steps above from within the active environment.  
+  * If you need to use custom kernels that are in a location other than _`/home/$USER/.local/share/jupyter`_ (for example, if your research team has a group installation of Anaconda environments located in _`/pl/active/<some_env>`_), you can create a file in your home directory named _`~/.jupyterrc`_ containing the following line:
 
    ```export JUPYTER_PATH=/pl/active/<some_env>/share/jupyter```
-* If you need assistance creating or installing environments or Jupyter kernels, contact us at rc-help@colorado.edu. 
-
-### Troubleshooting
-
-Jupyter notebook servers spawned on RC compute resources log to _`~/.jupyterhub-spawner.log`_. Watching the contents of this file provides useful information regarding any problems encountered during notebook startup or execution.
+  * If you need assistance creating or installing environments or Jupyter kernels, contact us at rc-help@colorado.edu. 
+  * _Troubleshooting_: Jupyter notebook servers spawned on RC compute resources log to _`~/.jupyterhub-spawner.log`_. Watching the contents of this file provides useful information regarding any problems encountered during notebook startup or execution.
 
 ### See Also
 
-* [CURC Anaconda distribution](../software/python.md)
-* [RC JupyterHub CHANGELOG](jupyterhub/CHANGELOG.md)
+* Documentation
+  * [CURC Anaconda distribution](../software/python.md)
+  * [CURC JupyterHub](../gateways/jupyterhub.md) 
+  * [Parallel Programming on CURC JupyterHub](https://curc.readthedocs.io/en/latest/gateways/parallel-programming-jupyter.html)
+* Other resources
+  * [Jupyter notebooks](https://jupyter.org)
+  * 
