@@ -13,7 +13,7 @@ For future reference, the following documentation is available:
 
 * [CURC Anaconda distribution](../software/python.md)
 * [CURC JupyterHub](../gateways/jupyterhub.md) 
-* [Parallel Programming on CURC (JupyterHub]https://curc.readthedocs.io/en/latest/gateways/parallel-programming-jupyter.html)
+* [Parallel Programming on CURC JupyterHub](https://curc.readthedocs.io/en/latest/gateways/parallel-programming-jupyter.html)
 
 ## Using the CURC Anaconda environment
 
