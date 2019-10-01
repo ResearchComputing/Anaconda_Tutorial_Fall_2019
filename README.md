@@ -7,7 +7,7 @@ To support the diverse python workflows and high levels of customization Researc
 * how to create a kernel to use your custom environment in RC JupyterHub
 * how to use your custom envirnoment in RC JupyterHub
 
-## Section 1: Finding Help
+## Finding Help
 
 For future reference, the following documentation is available:
 
@@ -17,13 +17,13 @@ For future reference, the following documentation is available:
 
 ## Using the CURC Anaconda environment
 
-Follow these steps from a Research Computing terminal session. 
+Follow these steps from a Research Computing terminal session (on a Summit _scompile_ or _compute_ node, or a Blanca _compute_ node). 
 
-#### Before you use conda for the first time:
+### Before you use conda for the first time:
 
-##### Modify your ~/.condarc file so that packages are downloaded to your _/projects_ directory
+#### Modify your ~/.condarc file so that packages are downloaded to your _/projects_ directory
 
-Your _/home/$USER_ directory (also denoted with "_~_") is small -- only 2 GB. By default, conda downloads packages to your home directory when creating a new environment, and it will quickly become full. The steps here modify the conda configration file, called _~/.condarc_, to change the default location of _pkgs_dirs_ so that the packages are downloaed to your (much bigger) _/projects_ directory.
+Your _/home/$USER_ directory (also denoted with "_~_") is small -- only 2 GB. By default, conda downloads packages to your home directory when creating a new environment, and it will quickly become full. The steps here modify the conda configration file, called _~/.condarc_, to change the default location of _pkgs_dirs_ so that the packages are downloaed to your (much bigger) _/projects_ directory.  Additionally, we will specify the location of _envs_dirs_ so that your custom environments are also installed in your _/projects_ directory. 
 
 Open your _~/.condarc_ file in your favorite text editor (e.g., nano):
 _(note: this file may not exist yet -- if not, just create a new file with this name)_
@@ -31,31 +31,32 @@ _(note: this file may not exist yet -- if not, just create a new file with this 
 [johndoe@shas0137]$ nano ~/.condarc
 ```
 
-...and add the following two lines:
+...and add the following lines (add the first two at a minimum:
 ```
 pkgs_dirs:
   - /projects/$USER/.conda_pkgs
+envs_dirs:
+  - /projects/$USER/software/anaconda/envs
 ```
 
 ...then save and exit the file. You won't need to perform this step again -- it's permanent unless you change _pkgs_dirs_ by editing _~/.condarc_ again.
 
 Note that there are lots of other things you can customize using the [~/.condarc file](https://docs.conda.io/projects/conda/en/latest/user-guide/configuration/use-condarc.html).
 
-### Activate the CURC Anaconda environment
+#### Make the following directory tree in your _/projects_ directory
 
-#### For python2:
 ```
-[johndoe@shas0137 ~]$ source /curc/sw/anaconda2/2019.03/bin/activate
+[johndoe@shas0137]$ mkdir -p /projects/$USER/software/anaconda/envs
+```
+
+### Activating the CURC Anaconda environment
+
+```
+[johndoe@shas0137 ~]$ source /curc/sw/anaconda3/latest
 (base) [johndoe@shas0137 ~]$ conda activate idp
 ```
 
-#### For python3:
-```
-[johndoe@shas0137 ~]$ source /curc/sw/anaconda3/2019.03/bin/activate
-(base) [johndoe@shas0137 ~]$ conda activate idp
-```
-
-The first command activates the "base" python2 or python3 environment, which uses the Anaconda python distribution.  You will know that you have properly activated the environment because you should see _`(base)`_ in front of your prompt. E.g.: 
+The first command activates the "base" python3 environment, which uses the Anaconda3 python distribution.  (note that for python2 you can (`source /curc/sw/anaconda3/latest`). You will know that you have properly activated the environment because you should see _`(base)`_ in front of your prompt. E.g.: 
 
 ```
 (base) [johndoe@shas0137 ~]$
@@ -77,57 +78,61 @@ _*We strongly recommend using the Intel python distribution on Summit_.
 (idp) [johndoe@shas0137 ~]$ conda list
 ```
 
-#### To add a new package named "foo" to the environment:
-
-```
-(idp) [johndoe@shas0137 ~]$ conda install foo 
-```
-
-#### To list the conda environments currently available:
-
-```
-(idp) [johndoe@shas0137 ~]$ conda env list
-```
-
 #### To deactivate an environment:
 
 ```
 (idp) [johndoe@shas0137 ~]$ conda deactivate
 ```
 
-#### To create a new environment in a predetermined location in your /projects directory.  
+#### To create a new environment in your /projects directory.  
 
 *Note: In the examples below the environment is created in /projects/$USER/software/anaconda/envs. This assumes that the software, anaconda, and envs directories already exist in /projects/$USER. Environments can be installed in any writable location the user chooses.
 
  ##### 1a Activate the conda environment if you haven't already done so.
  
 ```
-[johndoe@shas0137 ~]$ source /curc/sw/anaconda3/2019.03/bin/activate
-(base) [johndoe@shas0137 ~]$ conda activate idp
+[johndoe@shas0137 ~]$ source /curc/sw/anaconda3/latest
 ```
 
- ##### 2a. _Create a custom environment "from scratch"_: Here we create a new environment called _mycustomenv_:
+ ##### _Create a custom environment "from scratch"_: Here we create a new environment called _tutorial1_ that has a base python version of 3.6:
 
 ```
-(idp) [johndoe@shas0137 ~]$ conda create --prefix /projects/$USER/software/anaconda/envs/mycustomenv
+(base) [johndoe@shas0137 ~]$ conda create --name tutorial1 python==3.6
 ```
 
- or if you want a specific version of python other than the default installed in the CURC Anaconda base environment:
+  * _Note that you can also create a custom environment by cloning a preexisting environment. For example, you can clone the preexisting Intel Python3 distribution in the CURC Anaconda environment, creating a new environment called _mycustomenv_: `(base) [johndoe@shas0137 ~]$ conda create --clone idp --name myidp` (_we won't do this in the tutorial_).
+
+
+#### Confirm your new environment exists by listing all environments currently available:
 
 ```
-(idp) [johndoe@shas0137 ~]$ conda create --prefix /projects/$USER/software/anaconda/envs/mycustomenv python==2.7.16
+(base) [johndoe@shas0137 ~]$ conda env list
 ```
 
- ##### 2b. _Create a custom environment by cloning a preexisting environment_: Here we clone the preexisting Intel Python3 distribution in the CURC Anaconda environment, creating a new environment called _mycustomenv_:
+##### Activate and use your new environment
 
 ```
-(idp) [johndoe@shas0137 ~]$ conda create --clone idp --prefix /projects/$USER/software/anaconda/envs/mycustomenv
+(base) [johndoe@shas0137 ~]$ conda activate tutorial1
 ```
 
-##### 3. Activate your new environment
+##### To list existing packages in your new environment:
 
 ```
-(idp) [johndoe@shas0137 ~]$ conda activate /projects/$USER/software/anaconda/envs/mycustomenv
+(tutorial1) [johndoe@shas0137 ~]$ conda list
+```
+
+##### To add a new package to the environment:
+
+_in this example we install nltk, the "Natural Language Toolkit"._
+
+```
+(tutorial1) [johndoe@shas0137 ~]$ conda install nltk
+```
+
+##### Confirm the package is installed
+
+```
+(tutorial1) [johndoe@shas0137 ~]$ conda list | grep nltk
 ```
 
 ##### Notes on creating environments:
@@ -145,11 +150,7 @@ Sometimes conda environments can "break" if two packages in the environment requ
 * Reinstall the packages all within the same _install_ command (e.g., `conda install <package1> <package2>`).  This forces conda to attempt to resolve shared library conflicts. 
 * Create a new environment and reinstall the packages you need (preferably installing all with the same `conda install` command, rather than one-at-a-time, in order to resolve the conflicts).
 
-#### See Also
-
-* [CURC JupyterHub](../gateways/jupyterhub.md)
-
-## JupyterHub
+### Using Anaconda in RC JupyterHub
 
 [Jupyter notebooks](https://jupyter.org/) are an excellent resource for interactive development and data analysis using Python, R, and other languages. Jupyter notebooks can contain live code, equations, visualizations, and explanatory text which provide an excellent enviornment to use, learn, and teach interactive data analysis.  
 
@@ -309,6 +310,7 @@ _*Note: In the examples below the environment is created in `/projects/$USER/sof
 ```
 
 This command will create a kernel with the name _mycustomenv_ and the Jupyter display name _mycustomenv_ (note that the name and display-name are not required to match the environment name -- call them anything you want). By specifying the _`--user`_ flag, the kernel will be in _`/home/$USER/.local/share/jupyter/kernels`_ (a directory that is in the default __JUPYTER_PATH__) and will ensure your new kernel is available to you the next time you use CURC JupyterHub.
+
 
 ##### Notes
 * Anaconda
