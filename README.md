@@ -43,7 +43,7 @@ envs_dirs:
 
 Note that there are lots of other things you can customize using the [~/.condarc file](https://docs.conda.io/projects/conda/en/latest/user-guide/configuration/use-condarc.html).
 
-#### Make the following directory tree in your _/projects_ directory
+#### Make the following directory tree in your _/projects_ directory (this is where you'll install your custom environments)
 
 ```
 [johndoe@shas0137]$ mkdir -p /projects/$USER/software/anaconda/envs
@@ -88,7 +88,7 @@ _*We strongly recommend using the Intel python distribution on Summit_.
 
 *Note: In the examples below the environment is created in /projects/$USER/software/anaconda/envs. This assumes that the software, anaconda, and envs directories already exist in /projects/$USER. Environments can be installed in any writable location the user chooses.
 
- ##### 1a Activate the conda environment if you haven't already done so.
+ ##### Activate the base conda environment if you haven't already done so.
  
 ```
 [johndoe@shas0137 ~]$ source /curc/sw/anaconda3/latest
@@ -123,32 +123,17 @@ _*We strongly recommend using the Intel python distribution on Summit_.
 
 ##### To add a new package to the environment:
 
-_in this example we install nltk, the "Natural Language Toolkit"._
+_in this example we install ipykernel so that we can create a Jupyter kernel later. It will take a couple of minutes_
 
 ```
-(tutorial1) [johndoe@shas0137 ~]$ conda install nltk
+(tutorial1) [johndoe@shas0137 ~]$ conda install ipykernel
 ```
 
 ##### Confirm the package is installed
 
 ```
-(tutorial1) [johndoe@shas0137 ~]$ conda list | grep nltk
+(tutorial1) [johndoe@shas0137 ~]$ conda list | grep ipykernel
 ```
-
-##### Notes on creating environments:
-* You can create an environment in any directory location you prefer (as long as you have access to that directory).  We recommend using your _`/projects`_ directory because it is much larger than your _`/home`_ directory).
-
-* Although we don't show it here, it is expected that you will be installing whatever software and packages you need in this environment, as you normally would with conda).
-
-* We *strongly recommend* cloning the [Intel Python distribution](https://software.intel.com/en-us/distribution-for-python) if you will be doing any computationally-intensive work, or work that requires parallelization. The Intel Python distribution will run more efficiently on our Intel architecture than other python distributions.
-
-#### Troubleshooting
-
-If you are having trouble loading a package, you can use `conda list` or `pip freeze` to list the available packages and their version numbers in your current conda environment. Use `conda install <packagname>` to add a new package or `conda install <packagename==version>` for a specific verison; e.g., `conda install numpy=1.16.2`.
-
-Sometimes conda environments can "break" if two packages in the environment require different versions of the same shared library.  In these cases you try a couple of things.
-* Reinstall the packages all within the same _install_ command (e.g., `conda install <package1> <package2>`).  This forces conda to attempt to resolve shared library conflicts. 
-* Create a new environment and reinstall the packages you need (preferably installing all with the same `conda install` command, rather than one-at-a-time, in order to resolve the conflicts).
 
 ### Using Anaconda in RC JupyterHub
 
@@ -225,8 +210,6 @@ Alternately, you can use the _`Quit`_ button from the Jupyter home page to shut 
 
 Using the _`Logout`_ button will log you out of CURC JupyterHub.  It will not shut down your notebook server if one happens to be running.  
 
-### Additional Documentation
-
 #### Creating your own custom Jupyter kernels
 
 The CURC JupyterHub runs on top of the [CURC Anaconda distribution](../software/python.md). [Anaconda](http://anaconda.com) is an open-source _python_ and _R_ distribution that uses the _conda_ package manager to easily install software and packages. Software and associated Jupyter [kernels](https://github.com/jupyter/jupyter/wiki/Jupyter-kernels) other than _python_ and _R_ can also be installed using _conda_. The following steps describe how to create your own custom Anaconda environments and associated Jupyter kernels for use on RC JupyterHub. 
@@ -235,81 +218,23 @@ Follow these steps from a terminal session. You can get a new terminal session d
 
 ##### 1. Activate the CURC Anaconda environment
 
-__For python2__:
 ```
-[johndoe@shas0137 ~]$ source /curc/sw/anaconda2/2019.03/bin/activate
-```
-
-__For python3__:
-```
-[johndoe@shas0137 ~]$ source /curc/sw/anaconda3/2019.03/bin/activate
+[johndoe@shas0137 ~]$ source /curc/sw/anaconda3/latest
 ```
 
-You will know that you have properly activated the environment because you should see `(base)` in front of your prompt. E.g.: 
+##### 2. Activate the environment you want to create a kernel for
 
 ```
-(base) [johndoe@shas0137 ~]$
+(base) [johndoe@shas0137 ~]$ conda activate tutorial1
 ```
 
-##### 2. Modify your `~/.condarc` file so that packages are downloaded to your `/projects` directory
-
-By default, conda downloads packages to your `home/$USER` directory when creating a new environment. Your `/home/$USER` directory (also denoted with `~`) is small -- only 2 GB. The steps here modify the conda configration file, called `~/.condarc`, to change the default location of `pkgs_dirs` so that the packages are downloaed to your (much bigger) `/projects` directory.
-
-Open your `~/.condarc` file in your favorite text editor (e.g., nano, vim):
-_(note: this file may not exist yet -- if not, just create a new file with this name)_
-```
-(base) [johndoe@shas0137]$ nano ~/.condarc
-```
-
-...and add the following two lines:
-```
-pkgs_dirs:
-  - /projects/$USER/.conda_pkgss
-```
-
-...then save and exit the file. You won't need to perform this step again -- it's permanent unless you change _pkgs_dirs_ by editing _~/.condarc_ again.
-
-Note: You can customize [a variety of jupyter settings using the `~/.condarc` file](https://docs.conda.io/projects/conda/en/latest/user-guide/configuration/use-condarc.html).
-
-##### 3. Create a new environment in a predetermined location in your /projects directory.  
-
-_*Note: In the examples below the environment is created in `/projects/$USER/software/anaconda/envs`. This assumes that the `software`, `anaconda`, and `envs` directories already exist in `/projects/$USER`. Environments can be installed in any writable location the user chooses._ 
-
-##### a. _Create a custom environment "from scratch"_: Here we create a new environment called _mycustomenv_:
-
- ``` You will know that you have properly activated the environment because you should see _`(base)`_ in front of your prompt. E.g.: 
+##### 3. Create your own custom kernel, which will enable you to use this environment in CURC Jupyterhub:
 
 ```
-(base) [johndoe@shas0137 ~]$ conda create --prefix /projects/$USER/software/anaconda/envs/mycustomenv
+(tutorial1) [johndoe@shas0137 ~]$ python -m ipykernel install --user --name tutorial1 --display-name tutorial1
 ```
 
- or if you want a specific version of python other than the default installed in the CURC Anaconda base environment:
-
- ```
- (base) [johndoe@shas0137 ~]$ conda create --prefix /projects/$USER/software/anaconda/envs/mycustomenv python==2.7.16
- ```
-
- or...
-
-##### b. _Create a custom environment by cloning a preexisting environment_: Here we clone the preexisting Intel Python3 distribution in the CURC Anaconda environment, creating a new environment called _mycustomenv_:
-
- ```
- (base) [johndoe@shas0137 ~]$ conda create --clone idp --prefix /projects/$USER/software/anaconda/envs/mycustomenv
- ```
-
-##### 4. Activate your new environment
-
-```
-(base) [johndoe@shas0137 ~]$ conda activate /projects/$USER/software/anaconda/envs/mycustomenv
-```
-
-##### 5. Create your own custom kernel, which will enable you to use this environment in CURC Jupyterhub:
-
-```
-(mycustomenv) [johndoe@shas0137 ~]$ python -m ipykernel install --user --name mycustomenv --display-name mycustomenv
-```
-
-This command will create a kernel with the name _mycustomenv_ and the Jupyter display name _mycustomenv_ (note that the name and display-name are not required to match the environment name -- call them anything you want). By specifying the _`--user`_ flag, the kernel will be in _`/home/$USER/.local/share/jupyter/kernels`_ (a directory that is in the default __JUPYTER_PATH__) and will ensure your new kernel is available to you the next time you use CURC JupyterHub.
+This command will create a kernel with the name _tutorial1_ and the Jupyter display name _tutorial1_ (note that the name and display-name are not required to match the environment name -- call them anything you want). By specifying the _`--user`_ flag, the kernel will be in _`/home/$USER/.local/share/jupyter/kernels`_ (a directory that is in the default __JUPYTER_PATH__) and will ensure your new kernel is available to you the next time you use CURC JupyterHub.
 
 
 ##### Notes
@@ -325,6 +250,13 @@ This command will create a kernel with the name _mycustomenv_ and the Jupyter di
 
    ```export JUPYTER_PATH=/pl/active/<some_env>/share/jupyter```
   * If you need assistance creating or installing environments or Jupyter kernels, contact us at rc-help@colorado.edu. 
+  
+ ##### Troubleshooting 
+
+* If you are having trouble loading a package, you can use `conda list` or `pip freeze` to list the available packages and their version numbers in your current conda environment. Use `conda install <packagname>` to add a new package or `conda install <packagename==version>` for a specific verison; e.g., `conda install numpy==1.16.2`.
+* Sometimes conda environments can "break" if two packages in the environment require different versions of the same shared library.  In these cases you try a couple of things.
+* Reinstall the packages all within the same _install_ command (e.g., `conda install <package1> <package2>`).  This forces conda to attempt to resolve shared library conflicts. 
+* Create a new environment and reinstall the packages you need (preferably installing all with the same `conda install` command, rather than one-at-a-time, in order to resolve the conflicts).
   * _Troubleshooting_: Jupyter notebook servers spawned on RC compute resources log to _`~/.jupyterhub-spawner.log`_. Watching the contents of this file provides useful information regarding any problems encountered during notebook startup or execution.
 
 ### See Also
