@@ -11,7 +11,7 @@ To support the diverse python workflows and high levels of customization Researc
 
 For future reference, the following documentation is available:
 
-* [CURC Anaconda distribution](https://curc.readthedocs.io/en/latest/software/python.htmld)
+* [CURC Anaconda distribution](https://curc.readthedocs.io/en/latest/software/python.html)
 * [CURC JupyterHub](https://curc.readthedocs.io/en/latest/gateways/jupyterhub.html) 
 
 ## Using the CURC Anaconda environment
@@ -183,7 +183,7 @@ from pip._internal import main as pipmain
 pipmain(['freeze'])
 ```
 
-If the packages you need are not available, [you can create your own custom environment and Jupyter kernel](#additional-documentation).
+If the packages you need are not available, [you can create your own custom environment and Jupyter kernel](#Creating-your-own-custom-Jupyter-kernels).
 
 #### Step 4: Shut down a Notebook Server
 
@@ -195,7 +195,7 @@ Using the `Logout` button will log you out of CURC JupyterHub.  It will not shut
 
 #### Creating your own custom Jupyter kernels
 
-TThe CURC JupyterHub runs on top of the [CURC Anaconda distribution](../software/python.html). [Anaconda](http://anaconda.com) is an open-source _python_ and _R_ distribution that uses the _conda_ package manager to easily install software and packages. Software and associated Jupyter [kernels](https://github.com/jupyter/jupyter/wiki/Jupyter-kernels) other than _python_ and _R_ can also be installed using _conda_. The following steps describe how to create your own custom Jupyter kernels for use on RC JupyterHub. The _kernel_ is simply a file that provides a linkage between JupyterHub and a given conda environment.  We will create a Jupyter kernel for the `tutorial1` enviornment you created earlier. 
+TThe CURC JupyterHub runs on top of the [CURC Anaconda distribution](https://curc.readthedocs.io/en/latest/software/python.html). [Anaconda](http://anaconda.com) is an open-source _python_ and _R_ distribution that uses the _conda_ package manager to easily install software and packages. Software and associated Jupyter [kernels](https://github.com/jupyter/jupyter/wiki/Jupyter-kernels) other than _python_ and _R_ can also be installed using _conda_. The following steps describe how to create your own custom Jupyter kernels for use on RC JupyterHub. The _kernel_ is simply a file that provides a linkage between JupyterHub and a given conda environment.  We will create a Jupyter kernel for the `tutorial1` enviornment you created earlier. 
 
 Follow these steps from a terminal session. You can get a new terminal session directly from Jupyter using `New`-> `Terminal`.
 
@@ -239,6 +239,6 @@ This command will create a kernel with the name _tutorial1_ and the Jupyter disp
 
 ### See Also
 
-  * [CURC Anaconda distribution](https://curc.readthedocs.io/en/latest/software/python.htmld)
+  * [CURC Anaconda distribution](https://curc.readthedocs.io/en/latest/software/python.html)
   * [CURC JupyterHub](https://curc.readthedocs.io/en/latest/gateways/jupyterhub.html) 
   * [Jupyter notebooks](https://jupyter.org)
