@@ -11,9 +11,8 @@ To support the diverse python workflows and high levels of customization Researc
 
 For future reference, the following documentation is available:
 
-* [CURC Anaconda distribution](../software/python.md)
-* [CURC JupyterHub](../gateways/jupyterhub.md) 
-* [Parallel Programming on CURC JupyterHub](https://curc.readthedocs.io/en/latest/gateways/parallel-programming-jupyter.html)
+* [CURC Anaconda distribution](https://curc.readthedocs.io/en/latest/software/python.htmld)
+* [CURC JupyterHub](https://curc.readthedocs.io/en/latest/gateways/jupyterhub.html) 
 
 ## Using the CURC Anaconda environment
 
@@ -43,20 +42,15 @@ envs_dirs:
 
 Note that there are lots of other things you can customize using the [~/.condarc file](https://docs.conda.io/projects/conda/en/latest/user-guide/configuration/use-condarc.html).
 
-#### Make the following directory tree in your _/projects_ directory (this is where you'll install your custom environments)
-
-```
-[johndoe@shas0137]$ mkdir -p /projects/$USER/software/anaconda/envs
-```
 
 ### Activating the CURC Anaconda environment
 
 ```
-[johndoe@shas0137 ~]$ source /curc/sw/anaconda3/latest
+[johndoe@shas0137 ~]$ source /curc/sw/anaconda/latest
 (base) [johndoe@shas0137 ~]$ conda activate idp
 ```
 
-The first command activates the "base" python3 environment, which uses the Anaconda3 python distribution.  (note that for python2 you can (`source /curc/sw/anaconda3/latest`). You will know that you have properly activated the environment because you should see _`(base)`_ in front of your prompt. E.g.: 
+The first command activates the "base" Anaconda python3 environment. You will know that you have properly activated the environment because you should see _`(base)`_ in front of your prompt. E.g.: 
 
 ```
 (base) [johndoe@shas0137 ~]$
@@ -67,8 +61,6 @@ The second command (_conda activate idp_) activates the Intel python distributio
 ```
 (idp) [johndoe@shas0137 ~]$
 ```
-
-_*We strongly recommend using the Intel python distribution on Summit_.
 
 ### Using python in Anaconda
 
@@ -91,7 +83,7 @@ _*We strongly recommend using the Intel python distribution on Summit_.
  ##### Activate the base conda environment if you haven't already done so.
  
 ```
-[johndoe@shas0137 ~]$ source /curc/sw/anaconda3/latest
+[johndoe@shas0137 ~]$ source /curc/sw/anaconda/default
 ```
 
  ##### _Create a custom environment "from scratch"_: Here we create a new environment called _tutorial1_ that has a base python version of 3.6:
@@ -147,53 +139,44 @@ CURC JupyterHub is available at [https://jupyter.rc.colorado.edu](https://jupyte
 
 #### Step 2: Start a notebook server
 
-To start a notebook server, select one of the available options in the *Select job profile* menu under *Spawner Options* and click *Spawn*. Available options are:
+To start a notebook server, select the _Summit interactive (12hr)_ option in the *Select job profile* menu under *Spawner Options* and click *Spawn*. Available options are:
 
-* __Anaconda-based servers (recommended)__
    * __Summit interactive (12hr)__ (a 12-hour, 1 core job on a Summit "shas" node)
    * __Summit Haswell (1 node, 12hr)__ (a 12-hour, 24 core job on a Summit "shas" node)
    * __Blanca (12hr)__ (A 12-hour, 1 core job on your default Blanca partition; only available to Blanca users)
    * __Blanca CSDMS (12hr)__ (A 12-hour, 1 core job on the Blanca CSDMS partition; only available to Blanca CSDMS users)
-* __Module-based servers (legacy; no longer supported)__
-   * __Legacy - Summit Haswell - 2hr__ (a 2-hour, 1 core job on a Summit "shas" node)
-   * __Legacy - Summit Haswell - 12hr__ (a 12-hour, 1 core job on a Summit "shas" node)
-   * __Legacy - Summit Knight's Landing__ (a 2-hour, full node job on a Summit "sknl" node)
-   * __Legacy - Blanca CSDMS__ (A 12-hour, 1 core job on the Blanca CSDMS partition; only available to Blanca CSDMS users)
-   * __Legacy - Blanca Sol__ (A 12-hour, 1 core job on the Blanca Sol partition; only available to Blanca Sol users)
-   * __Legacy - Blanca APPM__ (A 12-hour, 1 core job on the Blanca APPM partition; only available to Blanca APPM users)
 
-The server will take a few moments to start.  When it does, you will be taken to the Jupyter home screen, which will show the contents of your CURC `/home` directory under the `Files` tab.  You will also see the following buttons in the upper right of the screen:
+The server will take a few moments to start.  When it does, you will be taken to the Jupyter home screen, which will show the contents of your CURC `/home` directory in the left menu bar. In the main work area on the right hand side you will see the “Launcher” and any other tabs you may have open from previous sessions.
 
-* _Quit_: Will terminate your notebook server (i.e., terminates the job you just started).  
-* _Logout_: Will log you out of CURC Jupyterhub and terminate your notebook server.
-* _Control Panel_: Will enable you to manually terminate and (if desired) restart your server.
-* _Upload_: Enables you to upload files from your local computer to your CURC _`/home`_ directory.
-* _New_: Enables you to open a new notebook via a chosen kernel (e.g., Python2, Python3, bash, R) 
-    * _documentation on opening new notebooks is provided in "Step 3" below_
+<p align="middle">
+  <img src="https://raw.githubusercontent.com/ResearchComputing/Documentation/dev/docs/gateways/jupyterhub/jupyterlab1.png"/>
+</p>
 
-##### Default Notebook Features
+##### Default Features of the JupyterLab interface
 
-* Access to standard RC file systems: 
-  * `/home`
-  * `/projects/`
-  * `/pl/active` (for users with PetaLibrary allocations)
-  * `/scratch/summit` (Summit only)
-  * `/rc_scratch` (Blanca only)
-* Access to the following default kernels in the CURC Anaconda distribution 
-  (_Note: documentation on creating and importing your own custom kernels is provided in the "Additional Documentation" below_):
-  * __Python 2 (idp)__: Python2 notebook (Intel Python distribution)
-  * __Python 3 (idp)__: Python3 notebook (Intel Python distribution)
-  * __Bash__: BASH notebook
-  * __R__: R notebook 
-* IPyParallel/IPython clusters
+* _Left sidebar:_ Click on a tab to change what you see in the left menu bar.  Options include the file browser, a list of running kernels and terminals, a command palette, a notebook cell tools inspector, and a tabs list.
+* _Left menu bar:_ 
+  * The _file browser_ will be active when you log in. 
+    * You can navigate to your other CURC directories by clicking the folder next to `/home/<username>`. Your other CURC file systems are available too: `/projects/<username>`, `/pl/active` (for users with PetaLibrary allocations), `/scratch/summit/<username>` (Summit only), and `/rc_scratch/<username>` (Blanca only).
+    * To open an existing notebook, just click on the notebook name in the file browser (e.g., _mynotebook.ipynb_).
+    * Above your working directory contents are buttons to add a new Launcher, create a new folder, upload files from your local computer, and refresh the working directory. 
+* _Main Work Area:_ Your workspaces will be in this large area on the right hand side. Under the "Launcher" tab you can: 
+  * Open a new notebook with any of the kernels listed:
+      * __Python 3 (idp)__: Python3 notebook (Intel Python distribution)
+      * __Bash__: BASH notebook
+      * __R__: R notebook 
+      * ...and any other custom kernels you add on your own _(see the [section below](#creating-your-own-custom-jupyter-kernels) on creating your own custom kernels)._
+   * Open a new console (command line) for any of the kernels.
+   * Open other functions; the "Terminal" function is particularly useful, as it enables you to access the command line on the Summit or Blanca node your Jupyterhub job is currently running on. 
+* See Jupyter's [documentation on the JupyterLab Interface for additional information.](https://jupyterlab.readthedocs.io/en/stable/user/interface.html)
 
 #### Step 3: Open a notebook
 
 There are two ways to open a notebook:
-* _To open a new notebook_: click on the _`New`_ button on the right hand side of the Jupyter home screen, and select one of the available options (kernels) under "Notebook", depending on the programming language you wish to use in the notebook (e.g., python, R, bash). Once you are in the notebook, you can save it to _myfilename_.ipynb using the _File -> Save as.._ option.
-* To open an existing notebook: Click on the _myfilename_.ipynb notebook that you want to work in.  This will open the notebook in the appropriate kernel (assuming that kernel is available on CURC Jupyterhub).
+* _To open a new notebook_: In the _launcher_ click on the icon for the programming language or environment for you wish to use in the notebook (e.g., python, R, bash). Once you are in the notebook, you can save it to _myfilename_.ipynb using the _File -> Save as.._ option.
+* To open an existing notebook: In the _file browser_ click on the _myfilename_.ipynb notebook that you want to work in.  This will open the notebook in the appropriate kernel (assuming that kernel is available on CURC Jupyterhub).
 
-_Tip_: The ___Python 2 (idp)___ and ___Python 3 (idp)___ notebook environments have many preinstalled packages. To query a list of available packages from a python notebook, you can use the following nomenclature:
+_Tip_: The ___Python 3___ notebook environment has many preinstalled packages. To query a list of available packages from a python notebook, you can use the following nomenclature:
 
 ```
 from pip._internal import main as pipmain 
@@ -204,31 +187,26 @@ If the packages you need are not available, [you can create your own custom envi
 
 #### Step 4: Shut down a Notebook Server
 
-Use the _`Stop My Server`_ button in the _`Control Panel`_ to shut down the Jupyter notebook server when finished (this cancels the job you are running on Summit or Blanca). You also have the option to restart a server if desired (for example, if you want to change from a "shas" to a "sknl" server).
+Go to the "File" menu at the top and choose "Hub Control Panel". Use the `Stop My Server` button in the `Control Panel` to shut down the Jupyter notebook server when finished (this cancels the job you are running on Summit or Blanca). You also have the option to restart a server if desired (for example, if you want to change from a "Summit Interactive" to a "Summit Haswell" server).
 
-Alternately, you can use the _`Quit`_ button from the Jupyter home page to shut down the Jupyter notebook server.
+Alternately, you can use the `Quit` button from the Jupyter home page to shut down the Jupyter notebook server.
 
-Using the _`Logout`_ button will log you out of CURC JupyterHub.  It will not shut down your notebook server if one happens to be running.  
+Using the `Logout` button will log you out of CURC JupyterHub.  It will not shut down your notebook server if one happens to be running.  
 
 #### Creating your own custom Jupyter kernels
 
-The CURC JupyterHub runs on top of the [CURC Anaconda distribution](../software/python.md). [Anaconda](http://anaconda.com) is an open-source _python_ and _R_ distribution that uses the _conda_ package manager to easily install software and packages. Software and associated Jupyter [kernels](https://github.com/jupyter/jupyter/wiki/Jupyter-kernels) other than _python_ and _R_ can also be installed using _conda_. The following steps describe how to create your own custom Anaconda environments and associated Jupyter kernels for use on RC JupyterHub. 
+TThe CURC JupyterHub runs on top of the [CURC Anaconda distribution](../software/python.html). [Anaconda](http://anaconda.com) is an open-source _python_ and _R_ distribution that uses the _conda_ package manager to easily install software and packages. Software and associated Jupyter [kernels](https://github.com/jupyter/jupyter/wiki/Jupyter-kernels) other than _python_ and _R_ can also be installed using _conda_. The following steps describe how to create your own custom Jupyter kernels for use on RC JupyterHub. The _kernel_ is simply a file that provides a linkage between JupyterHub and a given conda environment.  We will create a Jupyter kernel for the `tutorial1` enviornment you created earlier. 
 
 Follow these steps from a terminal session. You can get a new terminal session directly from Jupyter using `New`-> `Terminal`.
 
-##### 1. Activate the CURC Anaconda environment
+##### 1. Activate the environment you want to create a kernel for
 
 ```
-[johndoe@shas0137 ~]$ source /curc/sw/anaconda3/latest
+[johndoe@shas0137 ~]$ source /curc/sw/anaconda/default
+(base) [johndoe@shas0137 ~] $conda activate tutorial1
 ```
 
-##### 2. Activate the environment you want to create a kernel for
-
-```
-(base) [johndoe@shas0137 ~]$ conda activate tutorial1
-```
-
-##### 3. Create your own custom kernel, which will enable you to use this environment in CURC Jupyterhub:
+##### 2. Create your own custom kernel, which will enable you to use this environment in CURC Jupyterhub:
 
 ```
 (tutorial1) [johndoe@shas0137 ~]$ python -m ipykernel install --user --name tutorial1 --display-name tutorial1
@@ -243,7 +221,7 @@ This command will create a kernel with the name _tutorial1_ and the Jupyter disp
 * Creating conda environments
   * You can create an environment in any directory location you prefer (as long as you have access to that directory).  We recommend using your _`/projects`_ directory because it is much larger than your _`/home`_ directory).
   * Although we don't show it here, it is expected that you will be installing whatever software and packages you need in this environment, as you normally would with conda).
-  * We [strongly recommend] cloning the [Intel Python distribution](https://software.intel.com/en-us/distribution-for-python) (idp) if you will be doing any computationally-intensive work, or work that requires parallelization. The Intel Python distribution will run more efficiently on our Intel architecture than other python distributions.
+  * We [strongly recommend] using the [Intel Python distribution](https://software.intel.com/en-us/distribution-for-python) (idp) if you will be doing any computationally-intensive work, or work that requires parallelization. The Intel Python distribution will run more efficiently on our Intel architecture than other python distributions.
 * JupyterHub kernels
   * If you have already installed your own version of Anaconda or Miniconda, it is possible to create Jupyter kernels for your preexisting environments by following the steps above from within the active environment.  
   * If you need to use custom kernels that are in a location other than _`/home/$USER/.local/share/jupyter`_ (for example, if your research team has a group installation of Anaconda environments located in _`/pl/active/<some_env>`_), you can create a file in your home directory named _`~/.jupyterrc`_ containing the following line:
@@ -261,10 +239,6 @@ This command will create a kernel with the name _tutorial1_ and the Jupyter disp
 
 ### See Also
 
-* Documentation
-  * [CURC Anaconda distribution](../software/python.md)
-  * [CURC JupyterHub](../gateways/jupyterhub.md) 
-  * [Parallel Programming on CURC JupyterHub](https://curc.readthedocs.io/en/latest/gateways/parallel-programming-jupyter.html)
-* Other resources
+  * [CURC Anaconda distribution](https://curc.readthedocs.io/en/latest/software/python.htmld)
+  * [CURC JupyterHub](https://curc.readthedocs.io/en/latest/gateways/jupyterhub.html) 
   * [Jupyter notebooks](https://jupyter.org)
-  * 
